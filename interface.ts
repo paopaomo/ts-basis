@@ -178,7 +178,8 @@ class TextBox extends Control {
     }
 }
 
-class ImageC implements SelectableControl {
-    select() {
-    }
-}
+// ImageC 没有 extends Control,没有 state 属性,所以不能 implements SelectableControl
+// class ImageC implements SelectableControl {
+//     select() {
+//     }
+// }
