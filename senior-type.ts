@@ -108,3 +108,26 @@ if(isFish(pet)) {
 } else {
     pet.fly();
 }
+
+// null 类型
+function broken(name: string | null): string {
+    function postfix(epithet: string) {
+        return `${name!.charAt(0)}. the ${epithet}`;
+    }
+    name = name || 'Bob';
+    return postfix(name);
+}
+
+console.log(broken(null));
+
+// 字符串字面量类型
+type Easing = 'ease-in' | 'ease-out' | 'ease-in-out';
+
+class UIElement {
+    animate(dx: number, dy: number, easing: Easing) {
+
+    }
+}
+
+const button = new UIElement();
+button.animate(0, 0, 'ease-in');
