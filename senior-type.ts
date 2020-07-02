@@ -36,11 +36,19 @@ console.log(jim.name);
 jim.log();
 
 // T | U
+function isNumber(x: any): x is number {
+    return typeof x === 'number';
+}
+
+function isString(x: any): x is string {
+    return typeof x === 'string';
+}
+
 function padLeft(value: string, padding: string | number) {
-    if(typeof padding === 'number') {
+    if(isNumber(padding)) {
         return `${new Array(padding + 1).join(' ')}${value}`;
     }
-    if(typeof padding === 'string') {
+    if(isString(padding)) {
         return `${padding}${value}`;
     }
     throw new Error(`Expected string or number got ${padding}`);
@@ -49,18 +57,54 @@ function padLeft(value: string, padding: string | number) {
 console.log(padLeft('Hello World', 4));
 console.log(padLeft('Hello World', 'HaHa, '));
 
-interface Bird {
+// type of protection
+interface BirdInterface {
     fly();
     layEggs();
 }
 
-interface Fish {
+interface FishInterface {
     swim();
     layEggs();
 }
 
-function getSmallPet(): Bird | Fish {
+class Bird implements BirdInterface{
+    fly() {
+        console.log('bird fly');
+    }
+    layEggs() {
+        console.log('bird lay eggs');
+    }
 }
 
-const pet = getSmallPet();
+class Fish implements FishInterface {
+    swim() {
+        console.log('fish swim');
+    }
+    layEggs() {
+        console.log('fish lay eggs');
+    }
+}
+
+function getRandomPet(): Bird | Fish {
+    return Math.random() > 0.5 ? new Bird() : new Fish();
+}
+
+const pet = getRandomPet();
+if(pet instanceof Bird) {
+    pet.fly();
+}
+if(pet instanceof Fish) {
+    pet.swim();
+}
 pet.layEggs();
+
+function isFish(pet: Fish | Bird): pet is Fish {
+    return (pet as Fish).swim !== undefined;
+}
+
+if(isFish(pet)) {
+    pet.swim();
+} else {
+    pet.fly();
+}
