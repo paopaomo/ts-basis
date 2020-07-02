@@ -1,3 +1,4 @@
+// T & U
 function extend<T, U>(first: T, second: U): T & U {
     const result = {} as T & U;
 
@@ -33,3 +34,33 @@ const jim = extend(new Person('Jim'), new ConsoleLogger());
 
 console.log(jim.name);
 jim.log();
+
+// T | U
+function padLeft(value: string, padding: string | number) {
+    if(typeof padding === 'number') {
+        return `${new Array(padding + 1).join(' ')}${value}`;
+    }
+    if(typeof padding === 'string') {
+        return `${padding}${value}`;
+    }
+    throw new Error(`Expected string or number got ${padding}`);
+}
+
+console.log(padLeft('Hello World', 4));
+console.log(padLeft('Hello World', 'HaHa, '));
+
+interface Bird {
+    fly();
+    layEggs();
+}
+
+interface Fish {
+    swim();
+    layEggs();
+}
+
+function getSmallPet(): Bird | Fish {
+}
+
+const pet = getSmallPet();
+pet.layEggs();
